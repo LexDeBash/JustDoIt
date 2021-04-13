@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A88CADB1262571EE003C4C87 /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CADB0262571EE003C4C87 /* NewTaskViewController.swift */; };
-		A88CADC126259538003C4C87 /* Task.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A88CADBF26259538003C4C87 /* Task.xcdatamodeld */; };
+		A88CADC126259538003C4C87 /* JustDoIt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A88CADBF26259538003C4C87 /* JustDoIt.xcdatamodeld */; };
+		A88CADC526259710003C4C87 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CADC426259710003C4C87 /* StorageManager.swift */; };
 		A8CA7E0F2620854200B770F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CA7E0E2620854200B770F7 /* AppDelegate.swift */; };
 		A8CA7E112620854200B770F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CA7E102620854200B770F7 /* SceneDelegate.swift */; };
 		A8CA7E132620854200B770F7 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CA7E122620854200B770F7 /* TaskListViewController.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		A88CADB0262571EE003C4C87 /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		A88CADC026259538003C4C87 /* Task.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Task.xcdatamodel; sourceTree = "<group>"; };
+		A88CADC426259710003C4C87 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		A8CA7E0B2620854200B770F7 /* JustDoIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JustDoIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8CA7E0E2620854200B770F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8CA7E102620854200B770F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,7 +55,7 @@
 		A88CADB726259491003C4C87 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A88CADBF26259538003C4C87 /* Task.xcdatamodeld */,
+				A88CADBF26259538003C4C87 /* JustDoIt.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -85,6 +87,14 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		A88CADC3262596F7003C4C87 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A88CADC426259710003C4C87 /* StorageManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		A8CA7E022620854200B770F7 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +116,7 @@
 			children = (
 				A88CADB726259491003C4C87 /* Models */,
 				A88CADB52625946C003C4C87 /* ViewControllers */,
+				A88CADC3262596F7003C4C87 /* Services */,
 				A88CADB8262594B7003C4C87 /* SupportingFiles */,
 				A88CADBD26259505003C4C87 /* Storyboards */,
 				A88CADBC262594E9003C4C87 /* Resources */,
@@ -186,7 +197,8 @@
 				A8CA7E132620854200B770F7 /* TaskListViewController.swift in Sources */,
 				A8CA7E0F2620854200B770F7 /* AppDelegate.swift in Sources */,
 				A88CADB1262571EE003C4C87 /* NewTaskViewController.swift in Sources */,
-				A88CADC126259538003C4C87 /* Task.xcdatamodeld in Sources */,
+				A88CADC526259710003C4C87 /* StorageManager.swift in Sources */,
+				A88CADC126259538003C4C87 /* JustDoIt.xcdatamodeld in Sources */,
 				A8CA7E112620854200B770F7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,13 +403,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A88CADBF26259538003C4C87 /* Task.xcdatamodeld */ = {
+		A88CADBF26259538003C4C87 /* JustDoIt.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				A88CADC026259538003C4C87 /* Task.xcdatamodel */,
 			);
 			currentVersion = A88CADC026259538003C4C87 /* Task.xcdatamodel */;
-			path = Task.xcdatamodeld;
+			path = JustDoIt.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
