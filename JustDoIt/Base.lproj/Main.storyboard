@@ -53,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="475" y="115"/>
         </scene>
-        <!--View Controller-->
+        <!--New Task View Controller-->
         <scene sceneID="Nle-nF-AIs">
             <objects>
-                <viewController id="eU0-CP-aPF" sceneMemberID="viewController">
+                <viewController id="eU0-CP-aPF" customClass="NewTaskViewController" customModule="JustDoIt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8Hp-Ca-s2e">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,6 +112,9 @@
                                                         <integer key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="cancelButtonPressed" destination="eU0-CP-aPF" eventType="touchUpInside" id="hsg-RX-AYG"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="245" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f24-9h-IR2">
                                                 <rect key="frame" x="78" y="0.0" width="304" height="36"/>
@@ -120,6 +123,9 @@
                                                 <state key="normal" title="Done">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="doneButtonPressed" destination="eU0-CP-aPF" eventType="touchUpInside" id="6Ar-Re-iJs"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -138,6 +144,12 @@
                             <constraint firstItem="9HN-h2-j9B" firstAttribute="top" secondItem="KLg-nX-bcB" secondAttribute="top" id="tL8-pI-fl9"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bottomConstraint" destination="Ypg-UK-VJB" id="kcW-iT-Syr"/>
+                        <outlet property="doneButton" destination="f24-9h-IR2" id="lod-Lo-f10"/>
+                        <outlet property="prioritySegmentedControl" destination="Udy-hl-W3E" id="qb8-10-d1C"/>
+                        <outlet property="taskTextView" destination="FBg-Ky-FhK" id="c7W-yf-1YG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VTo-C4-Ajn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

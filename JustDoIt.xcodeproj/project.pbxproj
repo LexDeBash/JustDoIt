@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A88CADB1262571EE003C4C87 /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CADB0262571EE003C4C87 /* NewTaskViewController.swift */; };
 		A8CA7E0F2620854200B770F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CA7E0E2620854200B770F7 /* AppDelegate.swift */; };
 		A8CA7E112620854200B770F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CA7E102620854200B770F7 /* SceneDelegate.swift */; };
 		A8CA7E132620854200B770F7 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CA7E122620854200B770F7 /* TaskListViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A88CADB0262571EE003C4C87 /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		A8CA7E0B2620854200B770F7 /* JustDoIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JustDoIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8CA7E0E2620854200B770F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8CA7E102620854200B770F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				A8CA7E0E2620854200B770F7 /* AppDelegate.swift */,
 				A8CA7E102620854200B770F7 /* SceneDelegate.swift */,
 				A8CA7E122620854200B770F7 /* TaskListViewController.swift */,
+				A88CADB0262571EE003C4C87 /* NewTaskViewController.swift */,
 				A8CA7E142620854200B770F7 /* Main.storyboard */,
 				A8CA7E172620854400B770F7 /* Assets.xcassets */,
 				A8CA7E192620854400B770F7 /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			files = (
 				A8CA7E132620854200B770F7 /* TaskListViewController.swift in Sources */,
 				A8CA7E0F2620854200B770F7 /* AppDelegate.swift in Sources */,
+				A88CADB1262571EE003C4C87 /* NewTaskViewController.swift in Sources */,
 				A8CA7E112620854200B770F7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
