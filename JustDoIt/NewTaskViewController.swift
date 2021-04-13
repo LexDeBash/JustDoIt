@@ -28,6 +28,7 @@ class NewTaskViewController: UIViewController {
     }
 
     @IBAction func doneButtonPressed() {
+        dismiss(animated: true)
     }
     
     @IBAction func cancelButtonPressed() {
