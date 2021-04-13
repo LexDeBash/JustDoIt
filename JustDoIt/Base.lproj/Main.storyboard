@@ -62,7 +62,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9HN-h2-j9B">
-                                <rect key="frame" x="16" y="0.0" width="382" height="337"/>
+                                <rect key="frame" x="16" y="20" width="382" height="337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create task" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ks-98-yyY">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="25"/>
@@ -76,9 +76,13 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="245" text="New task..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FBg-Ky-FhK">
                                         <rect key="frame" x="0.0" y="33" width="382" height="304"/>
                                         <color key="backgroundColor" red="0.94117647058823528" green="0.70980392156862748" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.74898301686672186" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="23"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="eU0-CP-aPF" id="qdU-Ct-eLO"/>
+                                        </connections>
                                     </textView>
                                 </subviews>
                             </stackView>
@@ -123,6 +127,11 @@
                                                 <state key="normal" title="Done">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="doneButtonPressed" destination="eU0-CP-aPF" eventType="touchUpInside" id="6Ar-Re-iJs"/>
                                                 </connections>
@@ -141,7 +150,7 @@
                             <constraint firstItem="KLg-nX-bcB" firstAttribute="trailing" secondItem="9HN-h2-j9B" secondAttribute="trailing" constant="16" id="MCo-hb-ZVR"/>
                             <constraint firstItem="9HN-h2-j9B" firstAttribute="height" secondItem="8Hp-Ca-s2e" secondAttribute="height" multiplier="0.4" id="SKZ-q2-0g8"/>
                             <constraint firstItem="KLg-nX-bcB" firstAttribute="bottom" secondItem="aGK-rj-ThP" secondAttribute="bottom" id="Ypg-UK-VJB"/>
-                            <constraint firstItem="9HN-h2-j9B" firstAttribute="top" secondItem="KLg-nX-bcB" secondAttribute="top" id="tL8-pI-fl9"/>
+                            <constraint firstItem="9HN-h2-j9B" firstAttribute="top" secondItem="KLg-nX-bcB" secondAttribute="top" constant="20" id="tL8-pI-fl9"/>
                         </constraints>
                     </view>
                     <connections>
@@ -162,9 +171,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="okY-cy-s9Q">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.57385733880000001" green="0.9228929011" blue="0.96848052740000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.38039215686274508" green="0.82547553119929284" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="19"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="35"/>
