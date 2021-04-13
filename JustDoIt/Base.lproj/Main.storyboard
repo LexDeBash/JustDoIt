@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tasks-->
+        <!--Task List-->
         <scene sceneID="okY-4t-Eb8">
             <objects>
-                <tableViewController id="ySq-RP-W51" customClass="ViewController" customModule="JustDoIt" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="ySq-RP-W51" customClass="TaskListViewController" customModule="JustDoIt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="pIS-LM-eDF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,10 +40,11 @@
                             <outlet property="delegate" destination="ySq-RP-W51" id="HoK-yg-YQu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tasks" id="Ita-aZ-Lsc">
+                    <navigationItem key="navigationItem" title="Task List" id="Ita-aZ-Lsc">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="gTJ-Zb-9LY">
+                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="eU0-CP-aPF" kind="presentation" id="gtu-nx-Ixm"/>
+                                <segue destination="eU0-CP-aPF" kind="presentation" identifier="newTask" id="gtu-nx-Ixm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -150,6 +151,9 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.57385733880000001" green="0.9228929011" blue="0.96848052740000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="35"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

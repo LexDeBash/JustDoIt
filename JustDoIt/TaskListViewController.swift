@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TaskListViewController.swift
 //  JustDoIt
 //
 //  Created by Alexey Efimov on 09.04.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class TaskListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
