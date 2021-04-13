@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
 class TaskListViewController: UITableViewController {
     
-    private var fetchedResultsController = StorageManager.shared.fetchedResultsController(
+    private var fetchedResulstController = StorageManager.shared.fetchedResultsController(
         entityName: "Task",
         keyForSort: "date"
     )
@@ -17,9 +18,10 @@ class TaskListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        fetchedResulstController.delegate = self
         
         do {
-            try fetchedResultsController.performFetch()
+            try fetchedResulstController.performFetch()
         } catch {
             print(error)
         }
@@ -29,12 +31,12 @@ class TaskListViewController: UITableViewController {
 // MARK: - Table View Data Soutce
 extension TaskListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        fetchedResultsController.fetchedObjects?.count ?? 0
+        fetchedResulstController.fetchedObjects?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        guard let task = fetchedResultsController.object(at: indexPath) as? Task else { return cell }
+        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return cell }
         var content = cell.defaultContentConfiguration()
         content.text = task.title
         content.textProperties.font = UIFont(
@@ -61,12 +63,39 @@ extension TaskListViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
-            
+            if let task = self.fetchedResulstController.object(at: indexPath) as? Task {
+                StorageManager.shared.delete(task: task)
+            }
         }
         
         deleteAction.image = #imageLiteral(resourceName: "Trash")
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+// MARK: - NSFetchResultsControllerDelegate
+extension TaskListViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        default: break
+        }
     }
 }
 

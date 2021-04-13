@@ -32,7 +32,6 @@ class NewTaskViewController: UIViewController {
     @IBAction func doneButtonPressed() {
         guard let title = taskTextView.text, !title.isEmpty else { return }
         let priority = Int16(prioritySegmentedControl.selectedSegmentIndex)
-        
         storageManager.saveTask(withTitle: title, andPriority: priority)
         dismiss(animated: true)
     }
