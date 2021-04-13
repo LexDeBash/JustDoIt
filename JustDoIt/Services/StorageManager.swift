@@ -50,6 +50,11 @@ class StorageManager {
         saveContext()
     }
     
+    func delete(task: Task) {
+        viewContext.delete(task)
+        saveContext()
+    }
+    
     // MARK: - Core Data Saving support
     func saveContext() {
         if viewContext.hasChanges {
