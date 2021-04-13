@@ -8,10 +8,41 @@
 import UIKit
 
 class TaskListViewController: UITableViewController {
+    
+    private var fetchedResultsController = StorageManager.shared.fetchedResultsController(
+        entityName: "Task",
+        keyForSort: "date"
+    )
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
+    }
+}
+
+// MARK: - Table View Data Soutce
+extension TaskListViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        fetchedResultsController.fetchedObjects?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        guard let task = fetchedResultsController.object(at: indexPath) as? Task else { return cell }
+        var content = cell.defaultContentConfiguration()
+        content.text = task.title
+        content.textProperties.font = UIFont(
+            name: "Avenir Next Medium", size: 23
+        ) ?? UIFont.systemFont(ofSize: 23)
+        content.textProperties.color = .darkGray
+        cell.contentConfiguration = content
+        return cell
     }
 }
 
