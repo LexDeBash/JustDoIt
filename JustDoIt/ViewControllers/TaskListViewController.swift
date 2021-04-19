@@ -44,15 +44,7 @@ extension TaskListViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return cell }
-        var content = cell.defaultContentConfiguration()
-        
-        content.textProperties.font = UIFont(
-            name: "Avenir Next Medium", size: 23
-        ) ?? UIFont.systemFont(ofSize: 23)
-        
-        content.textProperties.color = .darkGray
-        content.text = task.title
-        cell.contentConfiguration = content
+        cell.contentConfiguration = setContentForCell(with: task)
         return cell
     }
 }
@@ -89,15 +81,18 @@ extension TaskListViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        guard let indexPath = indexPath else { return }
+        guard let newIndexPath = newIndexPath else { return }
+        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
+        
         switch type {
         case .insert:
-            if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        case .update:
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.contentConfiguration = setContentForCell(with: task)
         case .delete:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         default: break
         }
     }
@@ -129,5 +124,18 @@ extension TaskListViewController {
 
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    }
+    
+    private func setContentForCell(with task: Task) -> UIListContentConfiguration {
+        var content = UIListContentConfiguration.cell()
+        
+        content.textProperties.font = UIFont(
+            name: "Avenir Next Medium", size: 23
+        ) ?? UIFont.systemFont(ofSize: 23)
+        
+        content.textProperties.color = .darkGray
+        content.text = task.title
+
+        return content
     }
 }
