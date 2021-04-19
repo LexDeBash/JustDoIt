@@ -26,6 +26,13 @@ class TaskListViewController: UITableViewController {
             print(error)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editTask" {
+            guard let newTaskVC = segue.destination as? NewTaskViewController else { return }
+            newTaskVC.task = sender as? Task
+        }
+    }
 }
 
 // MARK: - Table View Data Soutce
@@ -51,7 +58,7 @@ extension TaskListViewController {
 }
 
 // MARK: - Table View Delegate
-extension TaskListViewController {    
+extension TaskListViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
             if let task = self.fetchedResulstController.object(at: indexPath) as? Task {
@@ -62,6 +69,12 @@ extension TaskListViewController {
         deleteAction.image = #imageLiteral(resourceName: "Trash")
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
+        performSegue(withIdentifier: "editTask", sender: task)
     }
 }
 

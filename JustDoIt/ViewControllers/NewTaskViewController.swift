@@ -14,39 +14,54 @@ class NewTaskViewController: UIViewController {
     @IBOutlet var doneButton: UIButton!
     @IBOutlet var bottomConstraint: NSLayoutConstraint!
     
+    var task: Task?
+    
     private let storageManager = StorageManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doneButton.isHidden = true
-        taskTextView.becomeFirstResponder()
-        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
+        
+        setupTextView()
     }
 
     @IBAction func doneButtonPressed() {
         guard let title = taskTextView.text, !title.isEmpty else { return }
         let priority = Int16(prioritySegmentedControl.selectedSegmentIndex)
-        storageManager.saveTask(withTitle: title, andPriority: priority)
+        if let task = task {
+            storageManager.edit(task: task, with: title, and: priority)
+        } else {
+            storageManager.saveTask(withTitle: title, andPriority: priority)
+        }
         dismiss(animated: true)
     }
     
     @IBAction func cancelButtonPressed() {
         dismiss(animated: true)
     }
+    
+    private func setupTextView() {
+        taskTextView.becomeFirstResponder()
+        if let task = task {
+            taskTextView.text = task.title
+            prioritySegmentedControl.selectedSegmentIndex = Int(task.priority)
+        } else {
+            doneButton.isHidden = true
+        }
+    }
 }
 
 // MARK: - Text view delegate
 extension NewTaskViewController: UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
+        textView.textColor = .white
         if doneButton.isHidden {
             textView.text.removeAll()
-            textView.textColor = .white
             doneButton.isHidden = false
             
             UIView.animate(withDuration: 0.3) {
