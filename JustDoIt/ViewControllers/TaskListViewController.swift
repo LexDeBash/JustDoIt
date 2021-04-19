@@ -38,29 +38,20 @@ extension TaskListViewController {
         let cell = UITableViewCell()
         guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return cell }
         var content = cell.defaultContentConfiguration()
+        
         content.textProperties.font = UIFont(
             name: "Avenir Next Medium", size: 23
         ) ?? UIFont.systemFont(ofSize: 23)
+        
         content.textProperties.color = .darkGray
-        content.attributedText = strikeThrough(string: task.title ?? "", false)
+        content.text = task.title
         cell.contentConfiguration = content
         return cell
     }
 }
 
 // MARK: - Table View Delegate
-extension TaskListViewController {
-    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let doneAction = UIContextualAction(style: .normal, title: "Done") { (_, _, isDone) in
-            isDone(true)
-        }
-        
-        doneAction.image = #imageLiteral(resourceName: "Check")
-        doneAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-        
-        return UISwipeActionsConfiguration(actions: [doneAction])
-    }
-    
+extension TaskListViewController {    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
             if let task = self.fetchedResulstController.object(at: indexPath) as? Task {
@@ -125,20 +116,5 @@ extension TaskListViewController {
 
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-    }
-    
-    private func strikeThrough(string: String, _ isStrikeThrough: Bool) -> NSAttributedString {
-        let attributedString: NSAttributedString
-        if isStrikeThrough {
-            attributedString = NSAttributedString(
-                string: string,
-                attributes: [
-                    NSAttributedString.Key.strikethroughStyle : NSUnderlineStyle.single.rawValue
-                ]
-            )
-        } else {
-            attributedString = NSAttributedString(string: string)
-        }
-        return attributedString
     }
 }
