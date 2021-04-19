@@ -38,11 +38,11 @@ extension TaskListViewController {
         let cell = UITableViewCell()
         guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return cell }
         var content = cell.defaultContentConfiguration()
-        content.text = task.title
         content.textProperties.font = UIFont(
             name: "Avenir Next Medium", size: 23
         ) ?? UIFont.systemFont(ofSize: 23)
         content.textProperties.color = .darkGray
+        content.attributedText = strikeThrough(string: task.title ?? "", false)
         cell.contentConfiguration = content
         return cell
     }
@@ -125,5 +125,20 @@ extension TaskListViewController {
 
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    }
+    
+    private func strikeThrough(string: String, _ isStrikeThrough: Bool) -> NSAttributedString {
+        let attributedString: NSAttributedString
+        if isStrikeThrough {
+            attributedString = NSAttributedString(
+                string: string,
+                attributes: [
+                    NSAttributedString.Key.strikethroughStyle : NSUnderlineStyle.single.rawValue
+                ]
+            )
+        } else {
+            attributedString = NSAttributedString(string: string)
+        }
+        return attributedString
     }
 }
