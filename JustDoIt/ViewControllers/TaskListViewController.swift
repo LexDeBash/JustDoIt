@@ -12,7 +12,7 @@ class TaskListViewController: UITableViewController {
     
     private var fetchedResulstController = StorageManager.shared.fetchedResultsController(
         entityName: "Task",
-        keyForSort: "date"
+        keysForSort: ["isComplete", "date"]
     )
 
     override func viewDidLoad() {
@@ -43,7 +43,7 @@ extension TaskListViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return cell }
+        let task = getTask(at: indexPath)
         cell.contentConfiguration = setContentForCell(with: task)
         return cell
     }
@@ -53,7 +53,7 @@ extension TaskListViewController {
 extension TaskListViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
-            if let task = self.fetchedResulstController.object(at: indexPath) as? Task {
+            if let task = self.getTask(at: indexPath) {
                 StorageManager.shared.delete(task: task)
             }
         }
@@ -63,9 +63,23 @@ extension TaskListViewController {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let doneAction = UIContextualAction(style: .normal, title: "Done") { (_, _, isDone) in
+            if let task = self.getTask(at: indexPath) {
+                StorageManager.shared.done(task: task)
+            }
+            isDone(true)
+        }
+        
+        doneAction.image = #imageLiteral(resourceName: "Check")
+        doneAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        
+        return UISwipeActionsConfiguration(actions: [doneAction])
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
+        let task = getTask(at: indexPath)
         performSegue(withIdentifier: "editTask", sender: task)
     }
 }
@@ -81,16 +95,20 @@ extension TaskListViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
         switch type {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         case .update:
             guard let indexPath = indexPath else { return }
-            guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        case .move:
+            guard let indexPath = indexPath else { return }
+            guard let newIndexPath = newIndexPath else { return }
             let cell = tableView.cellForRow(at: indexPath)
+            let task = getTask(at: newIndexPath)
             cell?.contentConfiguration = setContentForCell(with: task)
+            tableView.moveRow(at: indexPath, to: newIndexPath)
         case .delete:
             guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -127,7 +145,7 @@ extension TaskListViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
-    private func setContentForCell(with task: Task) -> UIListContentConfiguration {
+    private func setContentForCell(with task: Task?) -> UIListContentConfiguration {
         var content = UIListContentConfiguration.cell()
         
         content.textProperties.font = UIFont(
@@ -135,8 +153,33 @@ extension TaskListViewController {
         ) ?? UIFont.systemFont(ofSize: 23)
         
         content.textProperties.color = .darkGray
-        content.text = task.title
+        content.text = task?.title
+        content.attributedText = strikeThrough(string: task?.title ?? "", task?.isComplete ?? false)
 
         return content
+    }
+    
+    private func strikeThrough(string: String, _ isStrikeThrough: Bool) -> NSAttributedString {
+        var attributedString = NSAttributedString(
+            string: string,
+            attributes: [NSAttributedString.Key.strikethroughStyle : 0]
+        )
+        
+        if isStrikeThrough {
+            attributedString = NSAttributedString(
+                string: string,
+                attributes: [
+                    NSAttributedString.Key.strikethroughStyle : NSUnderlineStyle.double.rawValue
+                ]
+            )
+        }
+        return attributedString
+    }
+    
+    private func getTask(at indexPath: IndexPath?) -> Task? {
+        if let indexPath = indexPath {
+            return fetchedResulstController.object(at: indexPath) as? Task
+        }
+        return nil
     }
 }
