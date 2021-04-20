@@ -101,14 +101,12 @@ extension TaskListViewController: NSFetchedResultsControllerDelegate {
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         case .update:
             guard let indexPath = indexPath else { return }
-            let task = getTask(at: indexPath)
-            let cell = tableView.cellForRow(at: indexPath)
-            cell?.contentConfiguration = setContentForCell(with: task)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         case .move:
             guard let indexPath = indexPath else { return }
             guard let newIndexPath = newIndexPath else { return }
-            let task = getTask(at: newIndexPath)
             let cell = tableView.cellForRow(at: indexPath)
+            let task = getTask(at: newIndexPath)
             cell?.contentConfiguration = setContentForCell(with: task)
             tableView.moveRow(at: indexPath, to: newIndexPath)
         case .delete:
@@ -161,8 +159,11 @@ extension TaskListViewController {
         return content
     }
     
-    private func getTask(at indexPath: IndexPath) -> Task? {
-        fetchedResulstController.object(at: indexPath) as? Task
+    private func getTask(at indexPath: IndexPath?) -> Task? {
+        if let indexPath = indexPath {
+            return fetchedResulstController.object(at: indexPath) as? Task
+        }
+        return nil
     }
     
     private func strikeThrough(string: String, _ isStrikeThrough: Bool) -> NSAttributedString {
