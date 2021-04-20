@@ -81,17 +81,17 @@ extension TaskListViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard let indexPath = indexPath else { return }
-        guard let newIndexPath = newIndexPath else { return }
-        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
-        
         switch type {
         case .insert:
+            guard let newIndexPath = newIndexPath else { return }
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         case .update:
+            guard let indexPath = indexPath else { return }
+            guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
             let cell = tableView.cellForRow(at: indexPath)
             cell?.contentConfiguration = setContentForCell(with: task)
         case .delete:
+            guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .automatic)
         default: break
         }
