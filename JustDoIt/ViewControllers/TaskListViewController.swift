@@ -43,7 +43,7 @@ extension TaskListViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return cell }
+        let task = getTask(at: indexPath)
         cell.contentConfiguration = setContentForCell(with: task)
         return cell
     }
@@ -53,7 +53,7 @@ extension TaskListViewController {
 extension TaskListViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
-            if let task = self.fetchedResulstController.object(at: indexPath) as? Task {
+            if let task = self.getTask(at: indexPath) {
                 StorageManager.shared.delete(task: task)
             }
         }
@@ -65,7 +65,7 @@ extension TaskListViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
+        let task = getTask(at: indexPath)
         performSegue(withIdentifier: "editTask", sender: task)
     }
 }
@@ -81,17 +81,17 @@ extension TaskListViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard let indexPath = indexPath else { return }
-        guard let newIndexPath = newIndexPath else { return }
-        guard let task = fetchedResulstController.object(at: indexPath) as? Task else { return }
-        
         switch type {
         case .insert:
+            guard let newIndexPath = newIndexPath else { return }
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         case .update:
+            guard let indexPath = indexPath else { return }
+            let task = getTask(at: indexPath)
             let cell = tableView.cellForRow(at: indexPath)
             cell?.contentConfiguration = setContentForCell(with: task)
         case .delete:
+            guard let indexPath = indexPath else { return }
             tableView.deleteRows(at: [indexPath], with: .automatic)
         default: break
         }
@@ -126,7 +126,7 @@ extension TaskListViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
-    private func setContentForCell(with task: Task) -> UIListContentConfiguration {
+    private func setContentForCell(with task: Task?) -> UIListContentConfiguration {
         var content = UIListContentConfiguration.cell()
         
         content.textProperties.font = UIFont(
@@ -134,8 +134,12 @@ extension TaskListViewController {
         ) ?? UIFont.systemFont(ofSize: 23)
         
         content.textProperties.color = .darkGray
-        content.text = task.title
+        content.text = task?.title
 
         return content
+    }
+    
+    private func getTask(at indexPath: IndexPath) -> Task? {
+        fetchedResulstController.object(at: indexPath) as? Task
     }
 }
