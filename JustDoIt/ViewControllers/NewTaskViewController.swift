@@ -46,6 +46,7 @@ class NewTaskViewController: UIViewController {
     }
     
     private func setupTextView() {
+        taskTextView.textColor = .white
         taskTextView.becomeFirstResponder()
         if let task = task {
             taskTextView.text = task.title
@@ -59,7 +60,7 @@ class NewTaskViewController: UIViewController {
 // MARK: - Text view delegate
 extension NewTaskViewController: UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
-        textView.textColor = .white
+        
         if doneButton.isHidden {
             textView.text.removeAll()
             doneButton.isHidden = false
