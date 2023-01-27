@@ -10,7 +10,7 @@ import CoreData
 
 class TaskListViewController: UITableViewController {
     
-    private var fetchedResulstController = StorageManager.shared.fetchedResultsController(
+    private var fetchedResultsController = StorageManager.shared.fetchedResultsController(
         entityName: "Task",
         keysForSort: ["isComplete", "date"]
     )
@@ -18,10 +18,10 @@ class TaskListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        fetchedResulstController.delegate = self
+        fetchedResultsController.delegate = self
         
         do {
-            try fetchedResulstController.performFetch()
+            try fetchedResultsController.performFetch()
         } catch {
             print(error)
         }
@@ -38,7 +38,7 @@ class TaskListViewController: UITableViewController {
 // MARK: - Table View Data Soutce
 extension TaskListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        fetchedResulstController.fetchedObjects?.count ?? 0
+        fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -178,7 +178,7 @@ extension TaskListViewController {
     
     private func getTask(at indexPath: IndexPath?) -> Task? {
         if let indexPath = indexPath {
-            return fetchedResulstController.object(at: indexPath) as? Task
+            return fetchedResultsController.object(at: indexPath) as? Task
         }
         return nil
     }
